@@ -28,11 +28,8 @@ public:
 
 	class Iterator
 	{
-	private:
-		Node* node;
-
 	public:
-
+		Node* node;
 
 		friend class CList;
 
@@ -101,6 +98,8 @@ public:
 
 public:
 
+	int listLength;
+
 	CList()
 	{
 		head = new Node();
@@ -109,10 +108,10 @@ public:
 		head->next = tail;
 		tail->prev = head;
 
-		tail->deleteCheck = true;
-
 		head->prev = nullptr;
 		tail->next = nullptr;
+
+		listLength = 0;
 	}
 
 	~CList()
@@ -129,8 +128,9 @@ public:
 
 	void PushBack(T data)
 	{
-		Node* node = new Node(data);
+		listLength += 1;
 
+		Node* node = new Node(data);
 
 		// 테일 뒤에 추가
 		InputNode(tail, node);
@@ -138,6 +138,8 @@ public:
 
 	void PushFront(T data)
 	{
+		listLength += 1;
+
 		Node* node = new Node(data);
 
 		InputNode(head->next, node);
@@ -145,6 +147,9 @@ public:
 
 	void insert(Iterator iter, T data)
 	{
+
+		listLength += 1;
+
 		Node* node = new Node(data);
 
 		InputNode(iter.node, node);
@@ -163,6 +168,8 @@ public:
 
 	Iterator erase(Iterator iter)
 	{
+		listLength -= 1;
+
 		Iterator iterBuffer = iter;
 
 		iterBuffer.node->prev->next = iterBuffer.node->next;
@@ -194,6 +201,16 @@ public:
 		return false;
 	}
 
+
+	void DataSwap(Iterator iterF, Iterator iterE) {
+
+		T bufferData = iterF.node->data;
+
+		iterF.node->data = iterE.node->data;
+
+		iterE.node->data = bufferData;
+	}
+
 private:
 
 	// 특정 노드뒤에 input
@@ -207,4 +224,3 @@ private:
 	}
 
 };
-
