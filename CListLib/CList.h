@@ -8,7 +8,11 @@ private:
 	struct Node
 	{
 		// 생성자입니다.
-		Node(T data = NULL) :data(data), next(nullptr), prev(nullptr), bDeleteFlag(false)
+		Node(T data = NULL)
+			: data(data)
+			, next(nullptr)
+			, prev(nullptr)
+			, bDeleteFlag(false)
 		{
 		}
 
@@ -113,28 +117,26 @@ public:
 	};
 
 	CList()
+		: mpHead(nullptr)
+		, mpTail(nullptr)
+		, mListSize(0)
 	{
 		mpHead = new Node();
 		mpTail = new Node();
 
 		mpHead->next = mpTail;
 		mpTail->prev = mpHead;
-
-		mpHead->prev = nullptr;
-		mpTail->next = nullptr;
-
-		mListSize = 0;
 	}
 
 	~CList()
 	{
-		Node* prev = nullptr;
+		Node* pTemp = nullptr;
 
 		while (mpHead != nullptr)
 		{
-			prev = mpHead;
+			pTemp = mpHead;
 			mpHead = mpHead->next;
-			delete prev;
+			delete pTemp;
 		}
 	}
 
@@ -242,5 +244,4 @@ private:
 	Node* mpTail;
 
 	int mListSize;
-
 };
